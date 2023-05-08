@@ -1,0 +1,24 @@
+{
+  "name": "webflow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "NODE_ENV=dev node esbuild.config.js",
+    "build": "NODE_ENV=production node esbuild.config.js",
+    "flow": "NODE_ENV=flow node esbuild.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.15.15",
+    "esbuild-plugin-glsl": "^1.1.0"
+  },
+  "dependencies": {
+    "@studio-freight/lenis": "^1.0.12",
+    "three": "^0.152.2",
+    "tiny-emitter": "^2.1.0"
+  }
+}
