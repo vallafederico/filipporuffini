@@ -1,5 +1,6 @@
 import { WebGLRenderer } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import Tween from "gsap";
 
 import Viewport from "./viewport.js";
 import Scene from "./scene.js";
@@ -47,6 +48,13 @@ export class Gl {
 
       this.mouse.ex = this.mouse.x;
       this.mouse.ey = this.mouse.y;
+
+      Tween.to(this.mouse, {
+        ex: this.mouse.x,
+        ey: this.mouse.y,
+        duration: 0.5,
+        ease: "slow.out",
+      });
     });
   }
 
@@ -77,10 +85,10 @@ export class Gl {
   }
 
   resize() {
-    this.vp.resize();
     this.renderer.setSize(this.vp.w, this.vp.h);
     this.camera.aspect = this.vp.w / this.vp.h;
     this.camera.updateProjectionMatrix();
+    this.vp.resize();
 
     if (this.scene) this.scene.resize();
   }
@@ -94,5 +102,9 @@ export class Gl {
       this.camera.position.z * Math.tan(fovInRad / 2) * 2
     );
     return { w: height * (this.vp.w / this.vp.h), h: height };
+  }
+
+  get pixelSize() {
+    return (this.viewSize.w / this.vp.w + this.viewSize.h / this.vp.h) / 2;
   }
 }

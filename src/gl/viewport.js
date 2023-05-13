@@ -16,6 +16,8 @@ export default class {
     const height = Math.abs(
       this.camera.position.z * Math.tan(fovInRad / 2) * 2
     );
+
+    // console.log(this.camera);
     return { w: height * (this.w / this.h), h: height };
   }
 

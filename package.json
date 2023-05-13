@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@studio-freight/lenis": "^1.0.12",
+    "gsap": "^3.11.5",
     "three": "^0.152.2",
     "tiny-emitter": "^2.1.0"
   }

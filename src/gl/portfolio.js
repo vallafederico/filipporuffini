@@ -50,14 +50,14 @@ export class Portfolio extends Group {
       this.ctrl.movey -
       this.track.value * window.app.gl.vp.viewSize.h;
 
-    this.rotation.y = this.ctrl.ry + window.app.gl.mouse.ex;
+    this.rotation.y = this.ctrl.ry + window.app.gl.mouse.ex * 0.2;
     this.rotation.x = window.app.gl.mouse.ey * 0.2;
 
     // this.ctrl.screen.rotation.x = Math.sin(t) * 0.3;
   }
 
   resize(px = window.app.gl.vp.pixelSize) {
-    console.log("resize", px);
+    // console.log("resize", px);
   }
 
   traverse(model) {

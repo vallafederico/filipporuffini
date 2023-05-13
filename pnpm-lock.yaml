@@ -4,6 +4,9 @@ dependencies:
   '@studio-freight/lenis':
     specifier: ^1.0.12
     version: 1.0.12
+  gsap:
+    specifier: ^3.11.5
+    version: 3.11.5
   three:
     specifier: ^0.152.2
     version: 0.152.2
@@ -261,6 +264,10 @@ packages:
       esbuild-windows-64: 0.15.15
       esbuild-windows-arm64: 0.15.15
     dev: true
+
+  /gsap@3.11.5:
+    resolution: {integrity: sha512-Q89nKCLgoX5xUjznh9LcaIUkz54k1voNucT1Rpf9SJNFIQznBwFqt5qUUQbeVInFyN/n18OUJkpeI6CNEDt74w==}
+    dev: false
 
   /three@0.152.2:
     resolution: {integrity: sha512-Ff9zIpSfkkqcBcpdiFo2f35vA9ZucO+N8TNacJOqaEE6DrB0eufItVMib8bK8Pcju/ZNT6a7blE1GhTpkdsILw==}

@@ -21,7 +21,10 @@ export const clientRect = (element) => {
 };
 
 export const clientRectGl = (element, ratio) => {
-  const { bottom, height, top, wh, left, right, center } = clientRect(element);
+  const { bottom, height, top, wh, left, right, center, width } =
+    clientRect(element);
+
+  // element.style.border = "1px solid red";
 
   return {
     bottom: bottom * ratio,
@@ -31,5 +34,6 @@ export const clientRectGl = (element, ratio) => {
     left: left * ratio,
     right: right * ratio,
     center: center * ratio,
+    width: width * ratio,
   };
 };
