@@ -47,7 +47,7 @@ class Item extends Mesh {
 
   resize(px = window.app.gl.vp.pixelSize) {
     this.bounds = clientRectGl(this.el, px);
-    console.log(this.bounds.width);
+    // console.log(this.bounds.width);
 
     // this.position.x = this.bounds.left - this.bounds.width / 2;
     this.position.y =
@@ -56,3 +56,7 @@ class Item extends Mesh {
     this.scale.y = this.bounds.height;
   }
 }
+
+// https://assets.website-files.com/6458f0dc4f0f6183a3e42211/6460d324b2d9344aaa71954d_Deda_5sec-transcode.mp4
+
+// https://assets.website-files.com/6458f0dc4f0f6183a3e42211/6460d3306a5c7615fc12f471_Zorah_prova_05-transcode.mp4

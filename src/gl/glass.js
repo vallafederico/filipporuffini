@@ -30,13 +30,12 @@ export class Glass extends Group {
     this.ctrl.children.forEach((child, i) => {
       child.material = this.material;
       if (i !== 2) child.visible = false;
-      //   console.log(child.name, i);
     });
 
     this.resize();
 
     // this.rotation.x = Math.PI / 2;
-    this.ctrl.scale.set(3.5, 3.5, 3.5);
+    this.ctrl.scale.set(3, 3, 3);
 
     this.initSlider();
     this.initBackgorund();

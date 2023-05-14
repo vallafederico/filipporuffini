@@ -46,14 +46,14 @@ export class Gl {
       this.mouse.x = (e.clientX / this.vp.w) * 2 - 1;
       this.mouse.y = -(e.clientY / this.vp.h) * 2 + 1;
 
-      this.mouse.ex = this.mouse.x;
-      this.mouse.ey = this.mouse.y;
+      // this.mouse.ex = this.mouse.x;
+      // this.mouse.ey = this.mouse.y;
 
       Tween.to(this.mouse, {
         ex: this.mouse.x,
         ey: this.mouse.y,
         duration: 0.5,
-        ease: "slow.out",
+        ease: "linear",
       });
     });
   }
@@ -74,7 +74,7 @@ export class Gl {
 
   render() {
     if (this.paused) return;
-    this.time += 0.05;
+    this.time += 0.01;
 
     this.controls?.update();
 
