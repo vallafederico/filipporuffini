@@ -12,7 +12,7 @@ export default class extends ShaderMaterial {
 
     this.uniforms = {
       u_time: { value: options?.u_time || 0 },
-      u_t1: { value: window.app.gl.assets.tx_mac || null },
+      u_t1: { value: options?.t1 || null },
     };
 
     this.side = DoubleSide;

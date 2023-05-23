@@ -21,6 +21,7 @@ export class Background extends Group {
 
     // console.log(this.items);
     this.targetScene.add(...this.items);
+    // this.add(this.targetScene);
   }
 
   resize(px = window.app.gl.vp.pixelSize) {

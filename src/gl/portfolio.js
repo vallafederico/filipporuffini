@@ -12,13 +12,15 @@ export class Portfolio extends Group {
     this.ctrl = {
       screen: null,
       y: 0,
-      movey: -0.5,
-      ry: Math.PI / 6,
+      x: 0.3,
+      movey: 0,
+      ry: 0,
+      rx: 0.3,
+      scale: window.isMobile ? 1 : 2,
     };
 
-    console.log(model);
-
-    this.baseMaterial = new Material({});
+    this.baseMaterial = new Material({ t1: window.app.gl.assets.tx_mac });
+    this.rockMaterial = new Material({ t1: window.app.gl.assets.tx_rock });
     this.screenMaterial = new ScreenMat({});
 
     this.traverse(model);
@@ -27,8 +29,13 @@ export class Portfolio extends Group {
     this.observe = new Observe({
       element: this.element,
     });
-    this.observe.on("IN", () => (this.visible = true));
-    this.observe.on("OUT", () => (this.visible = false));
+
+    this.observe.on("IN", () => {
+      // this.visible = true;
+    });
+    this.observe.on("OUT", () => {
+      // this.visible = false;
+    });
 
     this.track = new Track({
       element: document.querySelector('[data-track="mac"]'),
@@ -37,12 +44,10 @@ export class Portfolio extends Group {
       },
     });
 
+    this.scale.set(this.ctrl.scale, this.ctrl.scale, this.ctrl.scale);
+    this.position.x = this.ctrl.x;
+
     this.resize();
-
-    // this.rotation.y = Math.PI / 4;
-    this.position.x = 0.3;
-    this.scale.set(1.9, 1.9, 1.9);
-
     this.initSlider();
 
     this.add(model);
@@ -70,8 +75,6 @@ export class Portfolio extends Group {
     if (this.index === i) return;
     this.index = i;
     this.screenMaterial.texture = this.items[i].videoTexture;
-
-    // console.log("enter", this.index);
   }
 
   render(t) {
@@ -79,12 +82,12 @@ export class Portfolio extends Group {
     this.position.y =
       this.ctrl.y +
       this.ctrl.movey -
-      this.track.value * window.app.gl.vp.viewSize.h;
+      this.track.value * 3 * window.app.gl.vp.viewSize.h;
 
     this.rotation.y = this.ctrl.ry + window.app.gl.mouse.ex * 0.2;
-    this.rotation.x = window.app.gl.mouse.ey * 0.2;
+    this.rotation.x = this.ctrl.rx + window.app.gl.mouse.ey * 0.2;
 
-    this.ctrl.screen.rotation.x = window.app.gl.mouse.ey * 0.5 + 0.3;
+    // this.ctrl.screen.rotation.x = window.app.gl.mouse.ey * 0.5 + 0.3;
   }
 
   resize(px = window.app.gl.vp.pixelSize) {
@@ -97,17 +100,23 @@ export class Portfolio extends Group {
     model.traverse((o) => {
       if (o.isMesh) {
         // console.log(o.name);
-        if (o.name === "screen") {
-          o.material = this.screenMaterial;
-        } else {
-          o.material = this.baseMaterial;
+
+        switch (o.name) {
+          case "_screen":
+            o.material = this.screenMaterial;
+            break;
+          case "rock":
+            o.material = this.rockMaterial;
+            break;
+          default:
+            o.material = this.baseMaterial;
         }
       }
 
-      if (!o.isMesh) {
-        // console.log(o.name);
-        if ((o.name = "_SCREEN")) this.ctrl.screen = o;
-      }
+      // if (!o.isMesh) {
+      // console.log(o.name);
+      // if ((o.name = "_SCREEN")) this.ctrl.screen = o;
+      // }
     });
   }
 }

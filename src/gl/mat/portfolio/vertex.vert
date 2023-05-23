@@ -4,7 +4,7 @@
 
 uniform float u_time;
 varying vec2 v_uv;
-varying vec2 v_uv1;
+// varying vec2 v_uv1;
 
 
 void main() {
@@ -12,5 +12,5 @@ void main() {
 
   gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
   v_uv = uv;
-  v_uv1 = uv1;
+  // v_uv1 = uv1;
 }

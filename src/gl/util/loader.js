@@ -9,18 +9,21 @@ export default class {
 
   async load() {
     console.time("::");
-    const [m_type, tx_mac] = await Promise.all([
+    const [m_type, tx_mac, tx_rock] = await Promise.all([
       loadModel(ASSETS.m_type),
       loadTexture(ASSETS.tx_mac),
+      loadTexture(ASSETS.tx_rock),
     ]);
 
     tx_mac.flipY = false;
-    // window.loaded = {};
+    tx_rock.flipY = false;
+
     console.timeEnd("::");
 
     return {
       m_type,
       tx_mac,
+      tx_rock,
     };
   }
 

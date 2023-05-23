@@ -16,6 +16,10 @@ export class Glass extends Group {
   constructor({ model }) {
     super();
 
+    this.c = {
+      scale: window.isMobile ? 1.5 : 3,
+    };
+
     this.ctrl = new Group();
     this.ctrl.add(...model);
     this.add(this.ctrl);
@@ -35,7 +39,8 @@ export class Glass extends Group {
     this.resize();
 
     // this.rotation.x = Math.PI / 2;
-    this.ctrl.scale.set(3, 3, 3);
+
+    this.ctrl.scale.set(this.c.scale, this.c.scale, this.c.scale);
 
     this.initSlider();
     this.initBackgorund();

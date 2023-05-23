@@ -2,6 +2,7 @@ export default class {
   constructor() {
     this.w = window.innerWidth;
     this.h = window.innerHeight;
+    if (this.w < this.h) window.isMobile = true;
     this.dpr = Math.min(window.devicePixelRatio, 2);
     this.container = document.querySelector('[data-gl="c"]');
   }
