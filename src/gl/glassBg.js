@@ -19,6 +19,14 @@ export class Background extends Group {
       return new Item({ el, src: el.dataset.refract });
     });
 
+    if (window.isMobile) {
+      this.mobileItems = [...document.querySelectorAll("[data-mrefract]")].map(
+        (el) => {
+          return new Item({ el, src: el.dataset.mrefract });
+        }
+      );
+    }
+
     // console.log(this.items);
     this.targetScene.add(...this.items);
     // this.add(this.targetScene);
@@ -36,6 +44,30 @@ export class Background extends Group {
     window.app.gl.renderer.setRenderTarget(null);
 
     return this.target.texture;
+  }
+
+  toggleMenu(open) {
+    if (open) {
+      console.log("menuOpen");
+      setTimeout(() => {
+        if (this.itemsAdded) {
+          this.mobileItems.forEach((item) => item.resize());
+          this.mobileItems.forEach((item) => (item.visible = true));
+        } else {
+          this.itemsAdded = true;
+          this.mobileItems.forEach((item) => item.resize());
+          this.targetScene.add(...this.mobileItems);
+        }
+      }, 500);
+
+      this.items.forEach((item) => (item.visible = false));
+    } else {
+      setTimeout(() => {
+        this.mobileItems.forEach((item) => (item.visible = false));
+        this.items.forEach((item) => (item.visible = true));
+        console.log("menuClose");
+      }, 500);
+    }
   }
 }
 
@@ -57,7 +89,3 @@ class Item extends Mesh {
     this.scale.y = this.bounds.height;
   }
 }
-
-// https://assets.website-files.com/6458f0dc4f0f6183a3e42211/6460d324b2d9344aaa71954d_Deda_5sec-transcode.mp4
-
-// https://assets.website-files.com/6458f0dc4f0f6183a3e42211/6460d3306a5c7615fc12f471_Zorah_prova_05-transcode.mp4

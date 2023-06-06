@@ -6,21 +6,15 @@
 
 ### Webflow
 
-- [ ] canvas
-
-- [ ] triggers for changing model
-
-- [ ] remove lenis from site code
-  - [ ] remove import script
-
-- [ ] markers for tracking (hero-w)
-
-- [ ] data-e on hero triggers
-
-- [ ] refract marker (on hero-row) + image in assets
-
-- [ ] add video `data-video="{}"` to portfolio trigger
-
 ### Todo
 
-- [ ] add inview trigggers for webgl scenes
+- [ ] mobile alternative `data-mrefract` / `data-drefract`
+
+- [ ] remove lenis from site code
+- [ ] remove import script
+
+- [ ] mobile menu tracking `data-mmenu="toggle"`
+
+- [ ] easter egg `data-view="easter"`
+
+- [ ] loader

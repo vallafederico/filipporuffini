@@ -3,6 +3,7 @@ import { Group, WebGLRenderTarget } from "three";
 import Material from "./mat/glass";
 import Backside from "./mat/glassbs";
 import { Background } from "./glassBg";
+import Tween from "gsap";
 
 /*
 text-3 0
@@ -17,7 +18,7 @@ export class Glass extends Group {
     super();
 
     this.c = {
-      scale: window.isMobile ? 1.5 : 3,
+      scale: window.isMobile ? 2 : 3,
     };
 
     this.ctrl = new Group();
@@ -33,17 +34,31 @@ export class Glass extends Group {
 
     this.ctrl.children.forEach((child, i) => {
       child.material = this.material;
-      if (i !== 2) child.visible = false;
+      if (i !== 2) {
+        child.visible = false;
+        child.scale.set(0, 0, 0);
+      }
     });
 
     this.resize();
 
     // this.rotation.x = Math.PI / 2;
 
-    this.ctrl.scale.set(this.c.scale, this.c.scale, this.c.scale);
+    // this.ctrl.scale.set(this.c.scale, this.c.scale, this.c.scale);
+    this.ctrl.scale.set(0, 0, 0);
 
     this.initSlider();
     this.initBackgorund();
+    if (window.isMobile) this.initMobileMenu();
+    this.initEaster();
+
+    Tween.to(this.ctrl.scale, {
+      x: this.c.scale,
+      y: this.c.scale,
+      z: this.c.scale,
+      duration: 1,
+      ease: "power4.inOut",
+    });
   }
 
   initBackgorund() {
@@ -53,11 +68,58 @@ export class Glass extends Group {
     this.resize();
   }
 
+  initEaster() {
+    this.isEasterView = false;
+    this.easterTrigger = [...document.querySelectorAll('[data-view="easter"]')];
+
+    const toggle = () => {
+      this.isEasterView = !this.isEasterView;
+      // console.log("toggle", this.isEasterView);
+
+      if (this.easterAnimation) this.easterAnimation.kill();
+      if (this.isEasterView) {
+        // shrink
+        this.easterAnimation = Tween.to(this.ctrl.scale, {
+          x: 0,
+          y: 0,
+          z: 0,
+          duration: 1,
+          ease: "power4.inOut",
+        });
+      } else {
+        // grow
+        this.easterAnimation = Tween.to(this.ctrl.scale, {
+          x: this.c.scale,
+          y: this.c.scale,
+          z: this.c.scale,
+          duration: 1,
+          delay: 0.5,
+          ease: "power4.inOut",
+        });
+      }
+    };
+
+    this.easterTrigger.forEach((trigger) => {
+      trigger.addEventListener("click", toggle);
+    });
+  }
+
+  initMobileMenu() {
+    this.menuOpen = false;
+    this.mobileTriggers = document.querySelectorAll('[data-mmenu="toggle"]');
+
+    const toggle = () => {
+      this.menuOpen = !this.menuOpen;
+      this.bg.toggleMenu(this.menuOpen);
+    };
+
+    this.mobileTriggers.forEach((trigger) => {
+      trigger.addEventListener("click", toggle);
+    });
+  }
+
   render(t, scroll = 0) {
     this.position.y = scroll;
-
-    // this.ctrl.position.x = window.app.gl.mouse.ex * 0.5;
-    // this.ctrl.position.y = window.app.gl.mouse.ey * 0.5;
 
     this.material.bstexture = this.renderBackside();
     this.material.texture = this.bg?.toTarget();
@@ -96,12 +158,43 @@ export class Glass extends Group {
     this.current = 2;
     // console.log("slider init");
 
+    const animate = (i) => {
+      return new Promise((resolve) => {
+        Tween.to(this.ctrl.children[this.current].scale, {
+          x: 0,
+          y: 0,
+          z: 0,
+          duration: 0.2,
+          // delay: 0,
+          ease: "expo.out",
+          onComplete: () => {
+            this.ctrl.children[this.current].visible = false;
+          },
+        });
+
+        this.ctrl.children[i].visible = true;
+        Tween.to(this.ctrl.children[i].scale, {
+          x: 1,
+          y: 1,
+          z: 1,
+          duration: 0.5,
+          // delay: 0.2,
+          ease: "expo.out",
+          onComplete: () => {
+            this.isAnimating = false;
+            resolve();
+          },
+        });
+      });
+    };
+
     const mouseTrigger = (i) => {
       if (i === this.current) return;
-      this.ctrl.children[this.current].visible = false;
+      if (this.isAnimating) return;
 
-      this.ctrl.children[i].visible = true;
-      this.current = i;
+      animate(i).then(() => (this.current = i));
+      this.isAnimating = true;
+
       //   console.log(i);
     };
 

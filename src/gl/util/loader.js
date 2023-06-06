@@ -9,6 +9,7 @@ export default class {
 
   async load() {
     console.time("::");
+
     const [m_type, tx_mac, tx_rock] = await Promise.all([
       loadModel(ASSETS.m_type),
       loadTexture(ASSETS.tx_mac),
@@ -27,5 +28,5 @@ export default class {
     };
   }
 
-  pipeload() {}
+  // pipeload() {}
 }

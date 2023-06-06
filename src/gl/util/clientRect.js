@@ -1,6 +1,7 @@
 // fix scroll value based on picked boilerplate
 
 export const clientRect = (element) => {
+  // console.log(element);
   const bounds = element.getBoundingClientRect();
 
   let scroll = 0;

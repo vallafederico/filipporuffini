@@ -30,12 +30,12 @@ export class Portfolio extends Group {
       element: this.element,
     });
 
-    this.observe.on("IN", () => {
-      // this.visible = true;
-    });
-    this.observe.on("OUT", () => {
-      // this.visible = false;
-    });
+    // this.observe.on("IN", () => {
+    // this.visible = true;
+    // });
+    // this.observe.on("OUT", () => {
+    // this.visible = false;
+    // });
 
     this.track = new Track({
       element: document.querySelector('[data-track="mac"]'),
@@ -49,6 +49,7 @@ export class Portfolio extends Group {
 
     this.resize();
     this.initSlider();
+    model.frustumCulled = false;
 
     this.add(model);
   }

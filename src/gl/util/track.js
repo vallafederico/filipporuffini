@@ -30,6 +30,7 @@ export class Track {
   }
 
   resize() {
+    // console.log(this.el);
     this.bounds = computeBounds(this.el, this.config);
   }
 
