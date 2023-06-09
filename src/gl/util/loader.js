@@ -13,15 +13,17 @@ export default class {
     console.time("::");
 
     const [m_type, tx_mac, tx_rock] = await Promise.all([
-      loadModel(ASSETS.m_type).then((val) => this.updateCallback(val)),
-      loadTexture(ASSETS.tx_mac).then((val) => this.updateCallback(val)),
-      loadTexture(ASSETS.tx_rock).then((val) => this.updateCallback(val)),
+      loadModel(ASSETS.m_type),
+      loadTexture(ASSETS.tx_mac),
+      loadTexture(ASSETS.tx_rock),
     ]);
 
     tx_mac.flipY = false;
     tx_rock.flipY = false;
 
     console.timeEnd("::");
+
+    this.updateCallback(1);
 
     return {
       m_type,
@@ -33,8 +35,6 @@ export default class {
   updateCallback(val) {
     this.progress++;
 
-    // console.log("updateCallback", this.progress / this.total);
-
     window.dispatchEvent(
       new CustomEvent("loadProgress", {
         detail: {
@@ -45,6 +45,4 @@ export default class {
 
     return val;
   }
-
-  // pipeload() {}
 }

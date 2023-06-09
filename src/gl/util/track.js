@@ -25,6 +25,7 @@ export class Track {
       ...config,
     };
 
+    // console.log(this.config);
     this.value = 0;
     this.resize();
   }

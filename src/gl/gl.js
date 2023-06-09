@@ -46,9 +46,6 @@ export class Gl {
       this.mouse.x = (e.clientX / this.vp.w) * 2 - 1;
       this.mouse.y = -(e.clientY / this.vp.h) * 2 + 1;
 
-      // this.mouse.ex = this.mouse.x;
-      // this.mouse.ey = this.mouse.y;
-
       Tween.to(this.mouse, {
         ex: this.mouse.x,
         ey: this.mouse.y,
@@ -72,6 +69,11 @@ export class Gl {
     this.render();
   }
 
+  animateIn() {
+    // console.log("animateIn from the outside");
+    this.scene.glass.introAnimation();
+  }
+
   render() {
     if (this.paused) return;
     this.time += 0.01;
@@ -85,10 +87,11 @@ export class Gl {
   }
 
   resize() {
+    // console.log("resize");
+    this.vp.resize();
     this.renderer.setSize(this.vp.w, this.vp.h);
     this.camera.aspect = this.vp.w / this.vp.h;
     this.camera.updateProjectionMatrix();
-    this.vp.resize();
 
     if (this.scene) this.scene.resize();
   }

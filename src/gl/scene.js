@@ -1,5 +1,5 @@
 import { Scene } from "three";
-import Quad from "./quad.js";
+// import Quad from "./quad.js";
 import { Glass } from "./glass.js";
 import { Portfolio } from "./portfolio.js";
 
@@ -19,6 +19,7 @@ export default class extends Scene {
     this.portfolio = new Portfolio({
       model: window.app.gl.assets.m_type.children[0],
     });
+
     this.add(this.portfolio);
 
     this.isActive = true;

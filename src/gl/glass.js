@@ -52,6 +52,12 @@ export class Glass extends Group {
     if (window.isMobile) this.initMobileMenu();
     this.initEaster();
 
+    // setTimeout(() => {
+    //   this.introAnimation();
+    // }, 1000);
+  }
+
+  introAnimation() {
     Tween.to(this.ctrl.scale, {
       x: this.c.scale,
       y: this.c.scale,

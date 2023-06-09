@@ -42,7 +42,7 @@ export class Observe extends Emitter {
       {
         // root: document.querySelector('#scrollArea'),
         rootMargin: "000px",
-        threshold: 0,
+        threshold: this.config.threshold,
       }
     );
   }

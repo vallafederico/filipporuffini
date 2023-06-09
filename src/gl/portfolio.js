@@ -4,6 +4,7 @@ import Material from "./mat/portfolio";
 import ScreenMat from "./mat/screen";
 import { Observe } from "./util/observe";
 import { Track } from "./util/track";
+import Tween from "gsap";
 
 export class Portfolio extends Group {
   constructor({ model }) {
@@ -25,17 +26,23 @@ export class Portfolio extends Group {
 
     this.traverse(model);
 
+    this.initTrackers();
+
+    this.scale.set(this.ctrl.scale, this.ctrl.scale, this.ctrl.scale);
+    this.position.x = this.ctrl.x;
+
+    this.resize();
+    this.initSlider();
+    this.frustumCulled = false;
+
+    this.add(model);
+  }
+
+  initTrackers() {
     this.element = document.querySelector('[data-track="folio"]');
     this.observe = new Observe({
       element: this.element,
     });
-
-    // this.observe.on("IN", () => {
-    // this.visible = true;
-    // });
-    // this.observe.on("OUT", () => {
-    // this.visible = false;
-    // });
 
     this.track = new Track({
       element: document.querySelector('[data-track="mac"]'),
@@ -44,14 +51,14 @@ export class Portfolio extends Group {
       },
     });
 
-    this.scale.set(this.ctrl.scale, this.ctrl.scale, this.ctrl.scale);
-    this.position.x = this.ctrl.x;
-
-    this.resize();
-    this.initSlider();
-    model.frustumCulled = false;
-
-    this.add(model);
+    this.footerTrack = new Track({
+      element: document.querySelector('[data-track="footer"]'),
+      config: {
+        bounds: [0, 1],
+        // bounds: [1, 0],
+        bottom: "bottom",
+      },
+    });
   }
 
   initSlider() {
@@ -80,10 +87,14 @@ export class Portfolio extends Group {
 
   render(t) {
     this.track?.render(t);
+    this.footerTrack?.render(t);
+    // console.log(this.footerTrack.value);
+
     this.position.y =
       this.ctrl.y +
       this.ctrl.movey -
-      this.track.value * 3 * window.app.gl.vp.viewSize.h;
+      this.track.value * 3 * window.app.gl.vp.viewSize.h -
+      this.footerTrack.value * window.app.gl.vp.viewSize.h;
 
     this.rotation.y = this.ctrl.ry + window.app.gl.mouse.ex * 0.2;
     this.rotation.x = this.ctrl.rx + window.app.gl.mouse.ey * 0.2;
