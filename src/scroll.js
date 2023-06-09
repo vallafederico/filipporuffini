@@ -38,6 +38,20 @@ export class Scroll extends Lenis {
 
     this.init();
     window.sscroll = this;
+
+    this.attachLinks();
+  }
+
+  attachLinks() {
+    document.querySelectorAll("[data-scrollink]").forEach((el) => {
+      // console.log(el, el.dataset.scrollink);
+
+      el.addEventListener("click", (e) => {
+        console.log("click", el.dataset.scrollink);
+        e.preventDefault();
+        this.to(`#${el.dataset.scrollink}`);
+      });
+    });
   }
 
   init() {
@@ -57,8 +71,8 @@ export class Scroll extends Lenis {
   to(target) {
     this.scrollTo(target, {
       offset: 0,
-      duration: 0.8,
-      easing: easeOutExpo,
+      duration: 1.8,
+      easing: customExpo,
       immediate: false,
     });
   }
