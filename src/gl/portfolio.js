@@ -2,9 +2,9 @@ import { Group, VideoTexture } from "three";
 // import { clientRectGl } from "./util/clientRect";
 import Material from "./mat/portfolio";
 import ScreenMat from "./mat/screen";
-import { Observe } from "./util/observe";
+// import { Observe } from "./util/observe";
 import { Track } from "./util/track";
-import Tween from "gsap";
+// import Tween from "gsap";
 
 export class Portfolio extends Group {
   constructor({ model }) {
@@ -34,16 +34,12 @@ export class Portfolio extends Group {
     this.resize();
     this.initSlider();
     this.frustumCulled = false;
+    model.frustumCulled = false;
 
     this.add(model);
   }
 
   initTrackers() {
-    this.element = document.querySelector('[data-track="folio"]');
-    this.observe = new Observe({
-      element: this.element,
-    });
-
     this.track = new Track({
       element: document.querySelector('[data-track="mac"]'),
       config: {
@@ -55,7 +51,6 @@ export class Portfolio extends Group {
       element: document.querySelector('[data-track="footer"]'),
       config: {
         bounds: [0, 1],
-        // bounds: [1, 0],
         bottom: "bottom",
       },
     });
@@ -77,6 +72,8 @@ export class Portfolio extends Group {
 
       return { el, videoTexture: new VideoTexture(video) };
     });
+
+    this.swapVideo(0);
   }
 
   swapVideo(i) {
@@ -98,11 +95,11 @@ export class Portfolio extends Group {
 
     this.rotation.y = this.ctrl.ry + window.app.gl.mouse.ex * 0.2;
     this.rotation.x = this.ctrl.rx + window.app.gl.mouse.ey * 0.2;
-
-    // this.ctrl.screen.rotation.x = window.app.gl.mouse.ey * 0.5 + 0.3;
   }
 
   resize(px = window.app.gl.vp.pixelSize) {
+    this.track?.resize();
+    this.footerTrack?.resize();
     // console.log("resize", px);
   }
 
@@ -111,7 +108,7 @@ export class Portfolio extends Group {
 
     model.traverse((o) => {
       if (o.isMesh) {
-        // console.log(o.name);
+        o.frustumCulled = false;
 
         switch (o.name) {
           case "_screen":
@@ -124,11 +121,6 @@ export class Portfolio extends Group {
             o.material = this.baseMaterial;
         }
       }
-
-      // if (!o.isMesh) {
-      // console.log(o.name);
-      // if ((o.name = "_SCREEN")) this.ctrl.screen = o;
-      // }
     });
   }
 }
