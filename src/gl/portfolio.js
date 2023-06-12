@@ -16,7 +16,7 @@ export class Portfolio extends Group {
       x: 0.3,
       movey: 0,
       ry: 0,
-      rx: 0.3,
+      rx: 0.5,
       scale: window.isMobile ? 1 : 2,
     };
 

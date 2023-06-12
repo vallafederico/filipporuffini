@@ -8,7 +8,9 @@ varying vec2 v_uv;
 void main() {
   vec2 uv = v_uv;
   uv -= vec2(0.5);
-  uv.y *= 1.2;
+  uv.y *= -1.;
+
+  uv.y *= 1.25;
   // uv.y -= 0.8;
   uv += vec2(0.5);
 
