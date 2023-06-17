@@ -60,6 +60,7 @@ export class Portfolio extends Group {
       const video = document.createElement("video");
       video.src = el.dataset.video;
       // video.autoplay = true;
+      video.playsInline = true;
       video.loop = true;
       video.muted = true;
       video.crossOrigin = "anonymous";
