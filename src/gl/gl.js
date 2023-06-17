@@ -72,6 +72,7 @@ export class Gl {
   animateIn() {
     // console.log("animateIn from the outside");
     this.scene.glass.introAnimation();
+    window.sscroll.start();
   }
 
   render() {

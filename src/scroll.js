@@ -39,7 +39,18 @@ export class Scroll extends Lenis {
     this.init();
     window.sscroll = this;
 
+    this.stop();
+
     this.attachLinks();
+
+    this.call = {
+      start: () => {
+        this.start();
+      },
+      stop: () => {
+        this.stop();
+      },
+    };
   }
 
   attachLinks() {

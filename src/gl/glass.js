@@ -22,17 +22,6 @@ export class Glass extends Group {
     };
 
     this.ctrl = new Group();
-    console.log(model);
-
-    // function that swaps two elements in an array
-    function swap(arr, i, j) {
-      const temp = arr[i];
-      arr[i] = arr[j];
-      arr[j] = temp;
-    }
-
-    swap(model, 4, 2);
-    swap(model, 4, 3);
 
     this.ctrl.add(...model);
     this.add(this.ctrl);

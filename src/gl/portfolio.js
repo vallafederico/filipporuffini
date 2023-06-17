@@ -66,20 +66,23 @@ export class Portfolio extends Group {
       video.loop = true;
       video.muted = true;
       video.crossOrigin = "anonymous";
-      video.play();
 
       el.addEventListener("mouseenter", () => this.swapVideo(i));
 
-      return { el, videoTexture: new VideoTexture(video) };
+      return { el, videoTexture: new VideoTexture(video), video };
     });
 
     this.swapVideo(0);
+
+    this.items[0].video.play();
   }
 
   swapVideo(i) {
     if (this.index === i) return;
     this.index = i;
     this.screenMaterial.texture = this.items[i].videoTexture;
+
+    this.items[i].video.play();
   }
 
   render(t) {
