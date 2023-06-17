@@ -1,10 +1,7 @@
 import { Group, VideoTexture } from "three";
-// import { clientRectGl } from "./util/clientRect";
 import Material from "./mat/portfolio";
 import ScreenMat from "./mat/screen";
-// import { Observe } from "./util/observe";
 import { Track } from "./util/track";
-// import Tween from "gsap";
 
 export class Portfolio extends Group {
   constructor({ model }) {
@@ -62,19 +59,19 @@ export class Portfolio extends Group {
       // create video
       const video = document.createElement("video");
       video.src = el.dataset.video;
-      video.autoplay = true;
+      // video.autoplay = true;
       video.loop = true;
       video.muted = true;
       video.crossOrigin = "anonymous";
 
-      el.addEventListener("mouseenter", () => this.swapVideo(i));
+      if (window.isMobile) {
+        el.addEventListener("click", () => this.swapVideo(i));
+      } else el.addEventListener("mouseenter", () => this.swapVideo(i));
 
       return { el, videoTexture: new VideoTexture(video), video };
     });
 
     this.swapVideo(0);
-
-    this.items[0].video.play();
   }
 
   swapVideo(i) {
@@ -82,7 +79,9 @@ export class Portfolio extends Group {
     this.index = i;
     this.screenMaterial.texture = this.items[i].videoTexture;
 
-    this.items[i].video.play();
+    this.items[i].video.play().catch((err) => {
+      console.log(err);
+    });
   }
 
   render(t) {
