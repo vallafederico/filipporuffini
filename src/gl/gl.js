@@ -7,6 +7,8 @@ import Scene from "./scene.js";
 import Camera from "./camera.js";
 import Loader from "./util/loader.js";
 
+import { Post } from "./post.js";
+
 export class Gl {
   constructor() {
     this.vp = new Viewport();
@@ -32,7 +34,7 @@ export class Gl {
   }
 
   async init() {
-    this.mouse = { x: 0, y: 0, ex: 0, ey: 0 };
+    this.mouse = { x: 0, y: 0, ex: 0, ey: 0, ox: 0, oy: 0 };
 
     this.create();
     this.initEvents();
@@ -43,20 +45,33 @@ export class Gl {
     new ResizeObserver((entry) => this.resize(entry[0].contentRect)).observe(this.vp.container);
 
     window.addEventListener("mousemove", (e) => {
-      this.mouse.x = (e.clientX / this.vp.w) * 2 - 1;
-      this.mouse.y = -(e.clientY / this.vp.h) * 2 + 1;
+      this.mouse.x = e.clientX / this.vp.w;
+      this.mouse.y = e.clientY / this.vp.h;
 
       Tween.to(this.mouse, {
-        ex: this.mouse.x,
-        ey: this.mouse.y,
+        ex: this.mouse.x * 2 - 1,
+        ey: -this.mouse.y * 2 - 1,
         duration: 0.5,
         ease: "linear",
       });
+
+      this.mouse.vx = this.mouse.x - this.mouse.ox;
+      this.mouse.vy = this.mouse.y - this.mouse.oy;
+
+      this.mouse.ox = this.mouse.x;
+      this.mouse.oy = this.mouse.y;
+
+      // console.log(this.mouse.vx, this.mouse.vy);
     });
   }
 
   create() {
     this.scene = new Scene();
+    this.post = new Post({
+      renderer: this.renderer,
+      scene: this.scene,
+      camera: this.camera,
+    });
 
     this.load();
   }
@@ -73,6 +88,7 @@ export class Gl {
     // console.log("animateIn from the outside");
     this.scene.glass.introAnimation();
     window.sscroll.start();
+    this.post.isRunning = true;
   }
 
   render() {
@@ -81,10 +97,20 @@ export class Gl {
 
     this.controls?.update();
 
+    this.mouse.vx *= 0.9;
+    this.mouse.vy *= 0.9;
+
     if (this.scene && this.scene.render) this.scene.render(this.time);
 
     // requestAnimationFrame(this.render.bind(this));
-    this.renderer.render(this.scene, this.camera);
+    // this.renderer.render(this.scene, this.camera);
+
+    if (this.post?.isOn) {
+      this.post.renderPasses(this.time);
+      this.post.render();
+    } else {
+      this.renderer.render(this.scene, this.camera);
+    }
   }
 
   resize() {

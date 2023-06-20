@@ -12,7 +12,7 @@ export default class {
   async load() {
     console.time("::");
 
-    const [m_type, tx_mac, tx_rock] = await Promise.all([
+    const [m_type, tx_mac, tx_rock, grid_tx] = await Promise.all([
       loadModel(ASSETS.m_type),
       loadTexture(ASSETS.tx_mac),
       loadTexture(ASSETS.tx_rock),

@@ -3,7 +3,7 @@ import { Scroll } from "./scroll.js";
 
 class App {
   constructor() {
-    console.log("App live");
+    console.log("App live from my computer");
 
     this.init();
   }
@@ -23,4 +23,6 @@ class App {
   }
 }
 
+// setTimeout(() => {
 window.app = new App();
+// }, 1000);

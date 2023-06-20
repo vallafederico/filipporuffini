@@ -15,6 +15,7 @@ export const clientRect = (element) => {
     top: bounds.top + scroll,
     width: bounds.width,
     wh: window.innerHeight,
+    ww: window.innerWidth,
     center: bounds.top + scroll + bounds.height / 2,
     // ww: window.innerWidth,
     // offset: bounds.top + scroll,
@@ -22,7 +23,7 @@ export const clientRect = (element) => {
 };
 
 export const clientRectGl = (element, ratio) => {
-  const { bottom, height, top, wh, left, right, center, width } =
+  const { bottom, height, top, wh, left, right, center, width, ww } =
     clientRect(element);
 
   // element.style.border = "1px solid red";
@@ -32,6 +33,7 @@ export const clientRectGl = (element, ratio) => {
     height: height * ratio,
     top: top * ratio,
     wh: wh * ratio,
+    ww: ww * ratio,
     left: left * ratio,
     right: right * ratio,
     center: center * ratio,

@@ -2,6 +2,7 @@ import { Scene } from "three";
 // import Quad from "./quad.js";
 import { Glass } from "./glass.js";
 import { Portfolio } from "./portfolio.js";
+import { Image } from "./images.js";
 
 export default class extends Scene {
   constructor() {
@@ -20,8 +21,14 @@ export default class extends Scene {
       model: window.app.gl.assets.m_type.children[0],
     });
 
+    this.img = new Image({
+      el: [...document.querySelectorAll("[data-e-img]")],
+    });
+
+    this.add(this.img);
     this.add(this.portfolio);
 
+    this.resize();
     this.isActive = true;
   }
 
@@ -31,11 +38,13 @@ export default class extends Scene {
 
     this.glass?.render(t, scroll);
     this.portfolio?.render(t, scroll);
+    this.img?.render(t, scroll);
     // if (this.quad) this.quad.render(t);
   }
 
   resize() {
     const px = window.app.gl.vp.pixelSize;
     this.glass?.resize(px);
+    this.img?.resize(px);
   }
 }

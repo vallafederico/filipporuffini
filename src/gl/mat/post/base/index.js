@@ -6,13 +6,20 @@ export const CopyShader = {
   uniforms: {
     tDiffuse: { value: null },
     opacity: { value: 1.0 },
+    u_tx: { value: null },
   },
   vertexShader,
   fragmentShader,
 };
 
 export class Shader extends ShaderPass {
-  constructor() {
+  constructor({ tx }) {
     super(CopyShader);
+
+    this.uniforms.u_tx.value = tx;
+  }
+
+  run(t) {
+    // console.log(t);
   }
 }
