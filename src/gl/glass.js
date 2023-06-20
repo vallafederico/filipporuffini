@@ -179,6 +179,7 @@ export class Glass extends Group {
           },
         });
 
+        // console.log(this.ctrl.children[i], i);
         this.ctrl.children[i].visible = true;
         Tween.to(this.ctrl.children[i].scale, {
           x: 1,

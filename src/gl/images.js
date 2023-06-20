@@ -1,5 +1,4 @@
-import { Group, Mesh, PlaneGeometry, DataTexture, TextureLoader } from "three";
-import * as THREE from "three";
+import { Group, Mesh, PlaneGeometry, TextureLoader } from "three";
 
 import Material from "./mat/image/";
 
@@ -39,6 +38,8 @@ class Img extends Mesh {
 
     this.el = el;
     this.texture = new TextureLoader().load(this.el.src);
+    this.el.onload = () =>
+      (this.texture = new TextureLoader().load(this.el.src));
 
     this.ratio = {
       x: this.el.naturalWidth / this.el.parentElement.clientWidth,

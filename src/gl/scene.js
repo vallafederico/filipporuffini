@@ -21,11 +21,14 @@ export default class extends Scene {
       model: window.app.gl.assets.m_type.children[0],
     });
 
-    this.img = new Image({
-      el: [...document.querySelectorAll("[data-e-img]")],
-    });
+    if (!window.isMobile) {
+      this.img = new Image({
+        el: [...document.querySelectorAll("[data-e-img]")],
+      });
 
-    this.add(this.img);
+      this.add(this.img);
+    }
+
     this.add(this.portfolio);
 
     this.resize();
